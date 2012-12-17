@@ -4,7 +4,7 @@
 :: and the script will generate all the needed stuff.
 
 :: Modify this value to yours!
-set StorePass=yourpass
-set KeyPass=yourpass
-set Alias=youralias
+set StorePass=spell
+set KeyPass=spell
+set Alias=spell
 set KeyStore=%CDir%\key.keystore
