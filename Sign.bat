@@ -8,6 +8,8 @@
 
 @echo off
 
+:: Don't change caller's environment
+setlocal
 set CDir=%~dp0%
 
 :: Uncomment the line below and set JAVA_HOME variable to point to your JDK if you don't wish
@@ -74,7 +76,7 @@ copy "%apk_path%.apk" "%apk_path%_tmp.apk" > nul
 
 :: Sign
 echo Signing...
-"%JAVA_HOME%\bin\jarsigner.exe" -verbose -keystore "%KeyStore%" -sigalg MD5withRSA -digestalg SHA1 -storepass %StorePass% --keypass %KeyPass% "%apk_path%_tmp.apk" %Alias% > "%CDir%\sign.log"
+call "%JAVA_HOME%\bin\jarsigner.exe" -verbose -keystore "%KeyStore%" -sigalg MD5withRSA -digestalg SHA1 -storepass %StorePass% --keypass %KeyPass% "%apk_path%_tmp.apk" %Alias% > "%CDir%\sign.log"
 if errorlevel 1 (
 	echo ERROR. Something wrong happened. Check "%CDir%\sign.log" for details
 	goto :Err
@@ -93,7 +95,7 @@ if errorlevel 1 (
 :: Cleanup
 del "%apk_path%_tmp.apk" 2> nul
 
-goto :Eof
+goto :EOF
 
 :Err
 pause
